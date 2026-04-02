@@ -4,8 +4,6 @@ export interface StudyArea {
   description: string;
   icon: string;
   color: string;
-  cardCount: number;
-  quizCount: number;
 }
 
 export interface Flashcard {
