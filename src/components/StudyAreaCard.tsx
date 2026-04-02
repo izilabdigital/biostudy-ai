@@ -18,12 +18,6 @@ export function StudyAreaCard({ area, onFlashcards, onQuiz }: StudyAreaCardProps
         </div>
       </div>
 
-      <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
-        <span>{area.cardCount} cards</span>
-        <span>•</span>
-        <span>{area.quizCount} questões</span>
-      </div>
-
       <div className="mt-4 flex gap-2">
         <button
           onClick={onFlashcards}
