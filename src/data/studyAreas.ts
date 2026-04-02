@@ -7,8 +7,6 @@ export const studyAreas: StudyArea[] = [
     description: "Estudo de microrganismos: bactérias, vírus, fungos e parasitas",
     icon: "🦠",
     color: "primary",
-    cardCount: 12,
-    quizCount: 8,
   },
   {
     id: "hematologia",
@@ -16,8 +14,6 @@ export const studyAreas: StudyArea[] = [
     description: "Estudo do sangue e seus componentes celulares",
     icon: "🩸",
     color: "destructive",
-    cardCount: 10,
-    quizCount: 6,
   },
   {
     id: "bioquimica",
@@ -25,8 +21,6 @@ export const studyAreas: StudyArea[] = [
     description: "Processos químicos e moleculares dos seres vivos",
     icon: "⚗️",
     color: "accent",
-    cardCount: 14,
-    quizCount: 10,
   },
   {
     id: "imunologia",
@@ -34,8 +28,6 @@ export const studyAreas: StudyArea[] = [
     description: "Sistema imunológico e mecanismos de defesa",
     icon: "🛡️",
     color: "success",
-    cardCount: 8,
-    quizCount: 5,
   },
   {
     id: "parasitologia",
@@ -43,8 +35,6 @@ export const studyAreas: StudyArea[] = [
     description: "Estudo dos parasitas e doenças parasitárias",
     icon: "🔬",
     color: "warning",
-    cardCount: 9,
-    quizCount: 7,
   },
   {
     id: "analises-clinicas",
@@ -52,8 +42,6 @@ export const studyAreas: StudyArea[] = [
     description: "Técnicas laboratoriais e interpretação de exames",
     icon: "🧪",
     color: "info",
-    cardCount: 11,
-    quizCount: 9,
   },
 ];
 

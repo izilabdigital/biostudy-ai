@@ -110,7 +110,6 @@ const Index = () => {
             ? "Gerando flashcards com IA..."
             : "Gerando quiz com IA..."}
         </p>
-        <p className="text-sm text-muted-foreground">Consultando n8n webhook</p>
       </div>
     );
   }
