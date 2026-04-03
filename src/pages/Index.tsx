@@ -1,12 +1,14 @@
-import { useState, useMemo } from "react";
-import { Difficulty, Flashcard, QuizQuestion } from "@/types/study";
+import { useState, useMemo, useEffect, useCallback } from "react";
+import { Difficulty, Flashcard, QuizQuestion, StudyArea } from "@/types/study";
 import { studyAreas, sampleFlashcards, sampleQuizQuestions } from "@/data/studyAreas";
 import { StudyAreaCard } from "@/components/StudyAreaCard";
 import { FlashcardViewer } from "@/components/FlashcardViewer";
 import { QuizView } from "@/components/QuizView";
 import { DifficultySelect } from "@/components/DifficultySelect";
+import { PdfUploadButton } from "@/components/PdfUploadButton";
 import { useN8nWebhook } from "@/hooks/useN8nWebhook";
-import { GraduationCap, Sparkles, Loader2, AlertCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { GraduationCap, Sparkles, Loader2, AlertCircle, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 type View =
