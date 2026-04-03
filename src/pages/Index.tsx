@@ -1,12 +1,14 @@
-import { useState, useMemo } from "react";
-import { Difficulty, Flashcard, QuizQuestion } from "@/types/study";
+import { useState, useMemo, useEffect, useCallback } from "react";
+import { Difficulty, Flashcard, QuizQuestion, StudyArea } from "@/types/study";
 import { studyAreas, sampleFlashcards, sampleQuizQuestions } from "@/data/studyAreas";
 import { StudyAreaCard } from "@/components/StudyAreaCard";
 import { FlashcardViewer } from "@/components/FlashcardViewer";
 import { QuizView } from "@/components/QuizView";
 import { DifficultySelect } from "@/components/DifficultySelect";
+import { PdfUploadButton } from "@/components/PdfUploadButton";
 import { useN8nWebhook } from "@/hooks/useN8nWebhook";
-import { GraduationCap, Sparkles, Loader2, AlertCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { GraduationCap, Sparkles, Loader2, AlertCircle, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 type View =
@@ -19,16 +21,47 @@ type View =
 
 const Index = () => {
   const [view, setView] = useState<View>({ type: "home" });
+  const [customAreas, setCustomAreas] = useState<StudyArea[]>([]);
   const { generateFlashcards, generateQuiz, loading, error } = useN8nWebhook();
   const { toast } = useToast();
 
+  const fetchCustomAreas = useCallback(async () => {
+    const { data } = await supabase
+      .from("custom_study_areas")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (data) {
+      setCustomAreas(
+        data.map((d: any) => ({
+          id: `custom-${d.id}`,
+          name: d.name,
+          description: d.description,
+          icon: d.icon,
+          color: d.color,
+        }))
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchCustomAreas();
+  }, [fetchCustomAreas]);
+
+  const allAreas = useMemo(() => [...studyAreas, ...customAreas], [customAreas]);
+
+  const handleDeleteCustomArea = async (areaId: string) => {
+    const dbId = areaId.replace("custom-", "");
+    await supabase.from("custom_study_areas").delete().eq("id", dbId);
+    fetchCustomAreas();
+  };
+
   const areaName = useMemo(() => {
     if (view.type === "home") return "";
-    return studyAreas.find((a) => a.id === view.areaId)?.name ?? "";
-  }, [view]);
+    return allAreas.find((a) => a.id === view.areaId)?.name ?? "";
+  }, [view, allAreas]);
 
   const handleFlashcards = async (areaId: string) => {
-    const area = studyAreas.find((a) => a.id === areaId);
+    const area = allAreas.find((a) => a.id === areaId);
     setView({ type: "loading-flashcards", areaId });
 
     const result = await generateFlashcards(area?.name ?? areaId);
@@ -62,7 +95,7 @@ const Index = () => {
   };
 
   const handleStartQuiz = async (areaId: string, difficulty: Difficulty) => {
-    const area = studyAreas.find((a) => a.id === areaId);
+    const area = allAreas.find((a) => a.id === areaId);
     setView({ type: "loading-quiz", areaId, difficulty });
 
     const result = await generateQuiz(area?.name ?? areaId, difficulty, 10);
@@ -178,15 +211,27 @@ const Index = () => {
       </header>
 
       <main className="mx-auto max-w-4xl px-4 py-8">
-        <h2 className="mb-6 text-xl font-bold text-foreground">Áreas de Estudo</h2>
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-foreground">Áreas de Estudo</h2>
+          <PdfUploadButton onUploadComplete={fetchCustomAreas} />
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {studyAreas.map((area, i) => (
-            <div key={area.id} style={{ animationDelay: `${i * 80}ms` }}>
+          {allAreas.map((area, i) => (
+            <div key={area.id} className="relative" style={{ animationDelay: `${i * 80}ms` }}>
               <StudyAreaCard
                 area={area}
                 onFlashcards={() => handleFlashcards(area.id)}
                 onQuiz={() => handleQuizDifficulty(area.id)}
               />
+              {area.id.startsWith("custom-") && (
+                <button
+                  onClick={() => handleDeleteCustomArea(area.id)}
+                  className="absolute top-2 right-2 p-1.5 rounded-full bg-destructive/80 hover:bg-destructive text-destructive-foreground transition-colors"
+                  title="Remover tema"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </button>
+              )}
             </div>
           ))}
         </div>
