@@ -14,7 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      custom_study_areas: {
+        Row: {
+          color: string
+          created_at: string
+          description: string
+          icon: string
+          id: string
+          name: string
+          source_pdf_name: string | null
+          source_pdf_url: string | null
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          name: string
+          source_pdf_name?: string | null
+          source_pdf_url?: string | null
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          name?: string
+          source_pdf_name?: string | null
+          source_pdf_url?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
