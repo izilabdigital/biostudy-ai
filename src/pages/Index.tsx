@@ -211,15 +211,27 @@ const Index = () => {
       </header>
 
       <main className="mx-auto max-w-4xl px-4 py-8">
-        <h2 className="mb-6 text-xl font-bold text-foreground">Áreas de Estudo</h2>
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-foreground">Áreas de Estudo</h2>
+          <PdfUploadButton onUploadComplete={fetchCustomAreas} />
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {studyAreas.map((area, i) => (
-            <div key={area.id} style={{ animationDelay: `${i * 80}ms` }}>
+          {allAreas.map((area, i) => (
+            <div key={area.id} className="relative" style={{ animationDelay: `${i * 80}ms` }}>
               <StudyAreaCard
                 area={area}
                 onFlashcards={() => handleFlashcards(area.id)}
                 onQuiz={() => handleQuizDifficulty(area.id)}
               />
+              {area.id.startsWith("custom-") && (
+                <button
+                  onClick={() => handleDeleteCustomArea(area.id)}
+                  className="absolute top-2 right-2 p-1.5 rounded-full bg-destructive/80 hover:bg-destructive text-destructive-foreground transition-colors"
+                  title="Remover tema"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </button>
+              )}
             </div>
           ))}
         </div>
