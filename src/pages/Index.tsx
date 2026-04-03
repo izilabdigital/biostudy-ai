@@ -61,7 +61,7 @@ const Index = () => {
   }, [view]);
 
   const handleFlashcards = async (areaId: string) => {
-    const area = studyAreas.find((a) => a.id === areaId);
+    const area = allAreas.find((a) => a.id === areaId);
     setView({ type: "loading-flashcards", areaId });
 
     const result = await generateFlashcards(area?.name ?? areaId);
