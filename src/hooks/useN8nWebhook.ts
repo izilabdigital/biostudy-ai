@@ -54,7 +54,7 @@ export function useN8nWebhook() {
     });
   };
 
-  const generateQuiz = async (area: string, difficulty: Difficulty, count = 5) => {
+  const generateQuiz = async (area: string, difficulty: Difficulty, count = 10) => {
     return callWebhook<QuizQuestion[]>({
       action: "generate_quiz",
       area,

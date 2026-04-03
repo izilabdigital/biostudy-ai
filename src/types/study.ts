@@ -26,14 +26,9 @@ export interface QuizQuestion {
 
 export type Difficulty = "facil" | "medio" | "dificil";
 
-// 🎲 gera número aleatório de 0 a 20
-export function getRandomCount(): number {
-  return Math.floor(Math.random() * 21)+ 1;
-}
-
-// 🎲 escolhe dificuldade aleatória
-export function getRandomDifficulty(): Difficulty {
-  const difficulties: Difficulty[] = ["facil", "medio", "dificil"];
-  const index = Math.floor(Math.random() * difficulties.length);
-  return difficulties[index];
+export interface QuizResult {
+  totalQuestions: number;
+  correctAnswers: number;
+  difficulty: Difficulty;
+  areaId: string;
 }
