@@ -21,8 +21,39 @@ type View =
 
 const Index = () => {
   const [view, setView] = useState<View>({ type: "home" });
+  const [customAreas, setCustomAreas] = useState<StudyArea[]>([]);
   const { generateFlashcards, generateQuiz, loading, error } = useN8nWebhook();
   const { toast } = useToast();
+
+  const fetchCustomAreas = useCallback(async () => {
+    const { data } = await supabase
+      .from("custom_study_areas")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (data) {
+      setCustomAreas(
+        data.map((d: any) => ({
+          id: `custom-${d.id}`,
+          name: d.name,
+          description: d.description,
+          icon: d.icon,
+          color: d.color,
+        }))
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchCustomAreas();
+  }, [fetchCustomAreas]);
+
+  const allAreas = useMemo(() => [...studyAreas, ...customAreas], [customAreas]);
+
+  const handleDeleteCustomArea = async (areaId: string) => {
+    const dbId = areaId.replace("custom-", "");
+    await supabase.from("custom_study_areas").delete().eq("id", dbId);
+    fetchCustomAreas();
+  };
 
   const areaName = useMemo(() => {
     if (view.type === "home") return "";
