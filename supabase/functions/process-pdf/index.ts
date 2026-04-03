@@ -25,7 +25,8 @@ Deno.serve(async (req) => {
     )
 
     // Upload PDF to storage
-    const fileName = `${Date.now()}-${file.name}`
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
+    const fileName = `${Date.now()}-${safeName}`
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from('study-pdfs')
       .upload(fileName, file, { contentType: 'application/pdf' })
