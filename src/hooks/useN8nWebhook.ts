@@ -60,13 +60,8 @@ const generateFlashcards = async (area: string, count = 5) => {
     ...card,
     difficulty: getRandomDifficulty(),
   }));
-  // 🔥 cada flashcard com dificuldade random
-  const flashcardsWithRandomCount = data.map((card) => ({
-    ...card,
-    count: getRandomCount(),
-  }));
 
-  return {flashcardsWithRandomDifficulty, flashcardsWithRandomCount, loading, error};
+  return flashcardsWithRandomDifficulty;
 };
 
 const generateQuiz = async (area: string, difficulty: Difficulty, count = 10) => {
