@@ -31,7 +31,7 @@ const Index = () => {
     const area = studyAreas.find((a) => a.id === areaId);
     setView({ type: "loading-flashcards", areaId });
 
-    const result = await generateFlashcards(area?.name ?? areaId, "facil", 5);
+    const result = await generateFlashcards(area?.name ?? areaId);
 
     if (result && Array.isArray(result) && result.length > 0) {
       const cards: Flashcard[] = result.map((item: any, i: number) => ({
