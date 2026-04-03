@@ -45,17 +45,16 @@ export function useN8nWebhook() {
     }
   };
 
-const generateFlashcards = async (area: string, count = 5) => {
+const generateFlashcards = async (area: string) => {
   const data = await callWebhook<Flashcard[]>({
     action: "generate_flashcards",
     area,
-    difficulty: "facil", // pode mandar qualquer um, vamos sobrescrever depois
-    count,
+    difficulty: "facil", // ignorado depois
+    count: getRandomCount(), // 🔥 AQUI
   });
 
   if (!data) return null;
 
-  // 🔥 cada flashcard com dificuldade random
   const flashcardsWithRandomDifficulty = data.map((card) => ({
     ...card,
     difficulty: getRandomDifficulty(),
@@ -78,7 +77,7 @@ const getRandomDifficulty = (): Difficulty => {
 };
 
 const getRandomCount = () => {
-  return Math.floor(Math.random() * 21) + 10; // 0 até 20
+  return Math.floor(Math.random() * 21) + 10; // 10 até 30
 };
 
   return { generateFlashcards, generateQuiz, loading, error };
