@@ -58,7 +58,7 @@ const Index = () => {
   const areaName = useMemo(() => {
     if (view.type === "home") return "";
     return allAreas.find((a) => a.id === view.areaId)?.name ?? "";
-  }, [view]);
+  }, [view, allAreas]);
 
   const handleFlashcards = async (areaId: string) => {
     const area = allAreas.find((a) => a.id === areaId);
