@@ -95,7 +95,7 @@ const Index = () => {
   };
 
   const handleStartQuiz = async (areaId: string, difficulty: Difficulty) => {
-    const area = studyAreas.find((a) => a.id === areaId);
+    const area = allAreas.find((a) => a.id === areaId);
     setView({ type: "loading-quiz", areaId, difficulty });
 
     const result = await generateQuiz(area?.name ?? areaId, difficulty, 10);
