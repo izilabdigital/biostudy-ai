@@ -65,7 +65,7 @@ const Index = () => {
     const area = studyAreas.find((a) => a.id === areaId);
     setView({ type: "loading-quiz", areaId, difficulty });
 
-    const result = await generateQuiz(area?.name ?? areaId, difficulty, 5);
+    const result = await generateQuiz(area?.name ?? areaId, difficulty, 10);
 
     if (result && Array.isArray(result) && result.length > 0) {
       const questions: QuizQuestion[] = result.map((item: any, i: number) => ({
