@@ -1,0 +1,1 @@
+CREATE POLICY "Anyone can update custom areas" ON public.custom_study_areas FOR UPDATE TO public USING (true) WITH CHECK (true);
