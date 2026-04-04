@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Flashcard, QuizQuestion, Difficulty } from "@/types/study";
 
-const WEBHOOK_URL = "https://n8n-n8n.xwskpb.easypanel.host/webhook-test/BioMed-Study";
+const WEBHOOK_URL = "https://n8n-n8n.xwskpb.easypanel.host/webhook/BioMed-Study";
 
 interface WebhookPayload {
   action: "generate_flashcards" | "generate_quiz";
