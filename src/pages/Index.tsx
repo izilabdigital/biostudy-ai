@@ -6,6 +6,7 @@ import { FlashcardViewer } from "@/components/FlashcardViewer";
 import { QuizView } from "@/components/QuizView";
 import { DifficultySelect } from "@/components/DifficultySelect";
 import { PdfUploadButton } from "@/components/PdfUploadButton";
+import { AddModuleDialog } from "@/components/AddModuleDialog";
 import { useN8nWebhook } from "@/hooks/useN8nWebhook";
 import { supabase } from "@/integrations/supabase/client";
 import { GraduationCap, Sparkles, Loader2, AlertCircle, Trash2 } from "lucide-react";
@@ -213,7 +214,10 @@ const Index = () => {
       <main className="mx-auto max-w-4xl px-4 py-8">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-xl font-bold text-foreground">Áreas de Estudo</h2>
-          <PdfUploadButton onUploadComplete={fetchCustomAreas} />
+          <div className="flex gap-2">
+            <AddModuleDialog onCreated={fetchCustomAreas} />
+            <PdfUploadButton onUploadComplete={fetchCustomAreas} />
+          </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {allAreas.map((area, i) => (
