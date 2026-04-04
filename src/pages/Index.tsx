@@ -6,6 +6,7 @@ import { FlashcardViewer } from "@/components/FlashcardViewer";
 import { QuizView } from "@/components/QuizView";
 import { DifficultySelect } from "@/components/DifficultySelect";
 import { PdfUploadButton } from "@/components/PdfUploadButton";
+import { AddModuleDialog } from "@/components/AddModuleDialog";
 import { useN8nWebhook } from "@/hooks/useN8nWebhook";
 import { supabase } from "@/integrations/supabase/client";
 import { GraduationCap, Sparkles, Loader2, AlertCircle, Trash2 } from "lucide-react";
